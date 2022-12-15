@@ -7,8 +7,8 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@NamedQuery(name = "User.findByEmailId" , query = "select u from User u where u.email=:email")
-//@Data
+@NamedQuery(name = "User.findByEmailId", query = "select u from User u where u.email=:email")
+@Data
 @Entity
 @DynamicUpdate
 @DynamicInsert
@@ -33,25 +33,23 @@ public class User implements Serializable {
 
     @Column(name = "password")
     private String password;
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", contactNumber='" + contactNumber + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", status='" + status + '\'' +
-                ", role='" + role + '\'' +
-                '}';
-    }
-
     @Column(name = "status")
     private String status;
 
     @Column(name = "role")
     private String role;
+
+    public User() {
+
+    }
+    public User(String name, String contactNumber, String email, String password, String status, String role) {
+        this.name = name;
+        this.contactNumber = contactNumber;
+        this.email = email;
+        this.password = password;
+        this.status = status;
+        this.role = role;
+    }
 
     public Integer getId() {
         return id;
@@ -101,11 +99,24 @@ public class User implements Serializable {
         this.status = status;
     }
 
-    public String getRole(String user) {
+    public String getRole() {
         return role;
     }
 
     public void setRole(String role) {
         this.role = role;
     }
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", contactNumber='" + contactNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", status='" + status + '\'' +
+                ", role='" + role + '\'' +
+                '}';
+    }
+
 }
