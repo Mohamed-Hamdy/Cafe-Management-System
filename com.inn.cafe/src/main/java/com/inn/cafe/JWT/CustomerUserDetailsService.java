@@ -19,18 +19,20 @@ public class CustomerUserDetailsService implements UserDetailsService {
     @Autowired
     UserDao userDao;
 
-    private  com.inn.cafe.POJO.User userDatails;
+    private com.inn.cafe.POJO.User userDatails;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info("Inside loadUserByUsername {}", username);
         userDatails = userDao.findByEmailId(username);
-        if(!Objects.isNull(userDatails)){
-            return new User(userDatails.getEmail() , userDatails.getPassword(), new ArrayList<>());
-        }else{
+        if (!Objects.isNull(userDatails)) {
+            return new User(userDatails.getEmail(), userDatails.getPassword(), new ArrayList<>());
+        } else {
             throw new UsernameNotFoundException("User not found");
         }
     }
-    public com.inn.cafe.POJO.User getUserDatails(){
+
+    public com.inn.cafe.POJO.User getUserDatails() {
         return userDatails;
     }
 }
