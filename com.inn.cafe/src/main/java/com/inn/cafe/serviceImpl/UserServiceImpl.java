@@ -1,5 +1,6 @@
 package com.inn.cafe.serviceImpl;
 
+import com.google.common.base.Strings;
 import com.inn.cafe.JWT.CustomerUserDetailsService;
 import com.inn.cafe.JWT.JwtFilter;
 import com.inn.cafe.JWT.jwtUtil;
@@ -41,6 +42,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     EmailUtil emailUtil;
+
     @Override
     public ResponseEntity<String> signUp(Map<String, String> requestMap) {
         log.info("Inside signup {}", requestMap);
@@ -128,14 +130,14 @@ public class UserServiceImpl implements UserService {
         try {
             if (jwtFilter.isAdmin()) {
                 Optional<User> optional = userDao.findById(Integer.parseInt(requestMap.get("id")));
-                if(!optional.isEmpty()){
+                if (!optional.isEmpty()) {
 
-                    userDao.updateStatus(requestMap.get("status") , Integer.parseInt(requestMap.get("id")));
-                    //sendMailToAllAdmin(requestMap.get("status") , optional.get().getEmail(), userDao.getAllAdmin());
-                    return CafeUtils.getResponeEntity("User Status is updated Successfully" , HttpStatus.OK);
+                    userDao.updateStatus(requestMap.get("status"), Integer.parseInt(requestMap.get("id")));
+                    sendMailToAllAdmin(requestMap.get("status"), optional.get().getEmail(), userDao.getAllAdmin());
+                    return CafeUtils.getResponeEntity("User Status is updated Successfully", HttpStatus.OK);
 
-                }else{
-                        return CafeUtils.getResponeEntity("User id doesn't exist" , HttpStatus.OK);
+                } else {
+                    return CafeUtils.getResponeEntity("User id doesn't exist", HttpStatus.OK);
                 }
             } else {
                 return CafeUtils.getResponeEntity(CafeConstants.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
@@ -146,15 +148,55 @@ public class UserServiceImpl implements UserService {
         return CafeUtils.getResponeEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    /*
+    @Override
+    public ResponseEntity<String> checkToken() {
+        return CafeUtils.getResponeEntity("true", HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<String> changePassword(Map<String, String> requestMap) {
+        try {
+            User user = userDao.findByEmail(jwtFilter.getCurrentUsername());
+            if (!user.equals(null)) {
+                if (user.getPassword().equals(requestMap.get("oldPassword"))) {
+                    user.setPassword(requestMap.get("newPassword"));
+                    userDao.save(user);
+                    return CafeUtils.getResponeEntity("Password Updated Successfully", HttpStatus.OK);
+                }
+                return CafeUtils.getResponeEntity("Incorrect Old Password", HttpStatus.BAD_REQUEST);
+            }
+            return CafeUtils.getResponeEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return CafeUtils.getResponeEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> forgetPassword(Map<String, String> requestMap) {
+        try {
+            User user = userDao.findByEmail(requestMap.get("email"));
+            if (!Objects.isNull(user) && !Strings.isNullOrEmpty(user.getEmail())) {
+                System.out.println("11");
+                emailUtil.forgetMail(user.getEmail() , "Credentials by Cafe Management System" , user.getPassword());
+                return CafeUtils.getResponeEntity("Check Your mail for Credentials", HttpStatus.OK);
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return CafeUtils.getResponeEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
     private void sendMailToAllAdmin(String status, String user, List<String> allAdmin) {
         allAdmin.remove(jwtFilter.getCurrentUsername());
-        if (status != null && status.equalsIgnoreCase("true")){
-            emailUtil.SendSimpleMessage(jwtFilter.getCurrentUsername() , "Account Approved" , "USER:- " + user+"\n is approved by\nADMIN:-"+jwtFilter.getCurrentUsername() , allAdmin);
-        }else{
-            emailUtil.SendSimpleMessage(jwtFilter.getCurrentUsername() , "Account Disabled" , "USER:- " + user+"\n is disabled by\nADMIN:-"+jwtFilter.getCurrentUsername() , allAdmin);
+        if (status != null && status.equalsIgnoreCase("true")) {
+            emailUtil.SendSimpleMessage(jwtFilter.getCurrentUsername(), "Account Approved", "USER:- " + user + "\n is approved by\nADMIN:-" + jwtFilter.getCurrentUsername(), allAdmin);
+        } else {
+            emailUtil.SendSimpleMessage(jwtFilter.getCurrentUsername(), "Account Disabled", "USER:- " + user + "\n is disabled by\nADMIN:-" + jwtFilter.getCurrentUsername(), allAdmin);
 
         }
     }
-    */
+
 }
