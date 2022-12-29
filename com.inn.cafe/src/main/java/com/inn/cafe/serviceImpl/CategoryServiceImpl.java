@@ -117,6 +117,4 @@ public class CategoryServiceImpl implements CategoryService {
         }
         return CafeUtils.getResponeEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-
 }
