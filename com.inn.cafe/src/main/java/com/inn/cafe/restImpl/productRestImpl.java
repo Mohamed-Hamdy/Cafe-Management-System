@@ -88,14 +88,17 @@ public class productRestImpl implements productRest {
 
     /*
     @Override
-    public ResponseEntity<String> updateStatus(Map<String, String> requestMap) {
+    public ResponseEntity<String> updateProductStatus(Map<String, String> requestMap) {
         try {
-            return productService.updateStatus(requestMap);
+            return productService.updateProductStatus(requestMap);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return CafeUtils.getResponeEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    */
+    }
+
+
+
+     */
 
 }

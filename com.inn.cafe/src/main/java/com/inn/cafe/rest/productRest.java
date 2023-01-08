@@ -26,8 +26,8 @@ public interface productRest {
 
     @GetMapping(path = "/getProductById/{id}")
     public ResponseEntity<ProductWrapper> getProductById(@PathVariable Integer id);
-
-    //@PostMapping(path = "/updateStatus")
-    //public ResponseEntity<String> updateStatus(@RequestBody Map<String, String> requestMap);
-
+    /*
+    @PostMapping(path = "/updateProductStatus")
+    public ResponseEntity<String> updateProductStatus(@RequestBody Map<String, String> requestMap);
+    */
 }

@@ -10,6 +10,7 @@ import java.io.Serializable;
 @NamedQuery(name = "Product.getAllProduct", query = "select new com.inn.cafe.wrapper.ProductWrapper(u.id , u.name , u.description , u.price , u.category.id , u.category.name , u.isavailable) from Product u")
 
 //@NamedQuery(name = "Product.updateProductStatus" , query = "update Product u set u.isavailable =:isavailable where u.id =:id")
+
 @NamedQuery(name = "Product.getByCategory", query = "select new com.inn.cafe.wrapper.ProductWrapper(u.id , u.name , u.description , u.price , u.category.id , u.category.name , u.isavailable  ) from Product u where u.category.id=:id and u.isavailable='true'")
 
 @NamedQuery(name = "Product.getProductById", query = "select new com.inn.cafe.wrapper.ProductWrapper(u.id , u.name , u.description , u.price) from Product u where u.id=:id")

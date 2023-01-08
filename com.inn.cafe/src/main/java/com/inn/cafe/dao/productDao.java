@@ -15,5 +15,6 @@ public interface productDao extends JpaRepository<Product, Integer> {
 
     ProductWrapper getProductById(@Param("id") Integer id);
 
-    //void updateStatus(@Param("isavailable") String isavailable,@Param("id") Integer id);
+    //void updateProductStatus(@Param("isavailable") String isavailable,@Param("id") Integer id);
+
 }

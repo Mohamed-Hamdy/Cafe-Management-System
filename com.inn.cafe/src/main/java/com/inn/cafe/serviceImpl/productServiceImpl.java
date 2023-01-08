@@ -141,7 +141,24 @@ public class productServiceImpl implements productService {
         }
         return new ResponseEntity<>(new ProductWrapper(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
+    /*
+    @Override
+    public ResponseEntity<String> updateProductStatus(Map<String, String> requestMap) {
+        try {
+            if (jwtFilter.isAdmin()) {
+                Optional optional = productDao.findById(Integer.parseInt(requestMap.get("id")));
+                if (!optional.isEmpty()) {
+                    productDao.updateProductStatus(requestMap.get("isavailable"), Integer.parseInt(requestMap.get("id")));
+                    return CafeUtils.getResponeEntity("Product status is updated successfully", HttpStatus.OK);
+                }
+                return CafeUtils.getResponeEntity("Product id doesn't exist", HttpStatus.OK);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return CafeUtils.getResponeEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    */
 
     private boolean validateProductMap(Map<String, String> requestMap, boolean validateId) {
         if (requestMap.containsKey("name")) {
