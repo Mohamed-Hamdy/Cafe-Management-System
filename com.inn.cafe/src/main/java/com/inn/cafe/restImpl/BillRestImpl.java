@@ -1,5 +1,6 @@
 package com.inn.cafe.restImpl;
 
+import com.inn.cafe.POJO.Bill;
 import com.inn.cafe.POJO.Category;
 import com.inn.cafe.constents.CafeConstants;
 import com.inn.cafe.rest.BillRest;
@@ -28,6 +29,37 @@ public class BillRestImpl implements BillRest {
         }
         return new ResponseEntity<>(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
 
+    }
+
+    @Override
+    public ResponseEntity<List<Bill>> getBills() {
+        try {
+            return billService.getBills();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<byte[]> getPdf(Map<String, Object> requestMap) {
+        try {
+            return billService.getPdf(requestMap);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+
+    @Override
+    public ResponseEntity<String> deleteBill(Integer id) {
+        try {
+            return billService.delete(id);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return CafeUtils.getResponeEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
