@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+//import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { GlobalConstants } from '../shared/global-constants';
 import { SnackbarService } from '../snackbar.service';
 import { UserService } from '../user.service';
@@ -44,6 +45,7 @@ export class LoginComponent implements OnInit {
       //this.ngxService.stop();
       this.dialogRef.close();
       localStorage.setItem('token' , response.token);
+      //alert("Successfully Login");
       this.router.navigate(['/cafe/dashboard']);
     },(error: { error: { message: any; }; })=>{
       //this.ngxService.stop();
@@ -52,7 +54,9 @@ export class LoginComponent implements OnInit {
       }else{
         this.responseMessage = GlobalConstants.genericError;
       }
+      alert(this.responseMessage +" " +GlobalConstants.error);
       this.snackbarService.openSnackBar(this.responseMessage , GlobalConstants.error);
     })
+
   }
 }

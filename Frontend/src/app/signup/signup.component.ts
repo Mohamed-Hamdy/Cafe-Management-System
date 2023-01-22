@@ -57,7 +57,8 @@ export class SignupComponent implements OnInit {
       this.dialogRef.close();
       this.responseMessage = response?.message;
       this.snackbarService.openSnackBar(this.responseMessage,"");
-      this.router.navigate(['/']);
+      alert("Successfully Login");
+      this.router.navigate(['/cafe/login']);
     },(error: { error: { message: any; }; })=>{
       //this.ngxService.stop();
       if(error.error?.message){
@@ -65,6 +66,7 @@ export class SignupComponent implements OnInit {
       }else{
         this.responseMessage = GlobalConstants.genericError;
       }
+      alert(this.responseMessage +" " +GlobalConstants.error);
       this.snackbarService.openSnackBar(this.responseMessage , GlobalConstants.error);
     })
   }
