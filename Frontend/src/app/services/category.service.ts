@@ -25,4 +25,3 @@ export class CategoryService {
     return this.httpClient.get(this.url + "/category/get");
   }
 }
- 

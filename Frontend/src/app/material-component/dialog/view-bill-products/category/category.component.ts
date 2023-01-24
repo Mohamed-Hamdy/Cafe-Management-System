@@ -77,10 +77,9 @@ responseMessage:any;
     }
     this.categoryService.update(data).subscribe((response:any)=>{
       this.dialogRef.close();
-      this.onAddCategory.emit();
+      this.onEditCatefory.emit();
       this.responseMessage = response.message;
       alert("Successfully Update Category");
-      //this.router.navigate(['/cafe/login']);
       this.snackbarService.openSnackBar(this.responseMessage , "success");
     },(error)=>{
       this.dialogRef.close();
@@ -92,5 +91,6 @@ responseMessage:any;
       }
       alert(this.responseMessage +" " +GlobalConstants.error);
       this.snackbarService.openSnackBar(this.responseMessage , GlobalConstants.error);
-    });  }
+    });  
+  }
 }
