@@ -10,18 +10,18 @@ public class ProductWrapper {
     String name;
     String description;
     Integer price;
-    String isavailable;
+    String status;
     Integer categoryId;
     String categoryName;
 
-    public ProductWrapper(Integer id, String name , String description , Integer price , Integer categoryId , String categoryName , String isavailable ) {
+    public ProductWrapper(Integer id, String name , String description , Integer price , Integer categoryId , String categoryName , String status ) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.categoryId = categoryId;
         this.categoryName = categoryName;
-        this.isavailable = isavailable;
+        this.status = status;
     }
 
     public ProductWrapper(Integer id, String name) {

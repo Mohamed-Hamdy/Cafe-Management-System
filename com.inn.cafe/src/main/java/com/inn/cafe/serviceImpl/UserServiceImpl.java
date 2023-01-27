@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
         user.setContactNumber(requestMap.get("contactNumber"));
         user.setEmail(requestMap.get("email"));
         user.setPassword(requestMap.get("password"));
-        user.setStatus("false");
+        user.setStatus(requestMap.get("status"));
         user.setRole("user");
         return user;
     }
@@ -174,8 +174,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<String> forgetPassword(Map<String, String> requestMap) {
+        System.out.println("inside the forgot password function");
         try {
             User user = userDao.findByEmail(requestMap.get("email"));
+            System.out.println("user email is : " + user.getEmail());
             if (!Objects.isNull(user) && !Strings.isNullOrEmpty(user.getEmail())) {
                 //System.out.println("11");
                 emailUtil.forgetMail(user.getEmail() , "Credentials by Cafe Management System" , user.getPassword());

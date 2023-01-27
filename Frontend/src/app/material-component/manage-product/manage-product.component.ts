@@ -114,7 +114,7 @@ export class ManageProductComponent implements OnInit {
     }
     this.productService.updateStatus(data).subscribe((response:any)=>{
       this.responseMessage = response?.message;
-      //this.SnackbarService.openSnackBar(this.responseMessage , "success");
+      this.SnackbarService.openSnackBar(this.responseMessage , "success");
     },(error:any)=>{
       //console.log(error.error?.message);
       if(error.error?.message){
@@ -122,9 +122,9 @@ export class ManageProductComponent implements OnInit {
       }else{
         //alert("status is updated successfully");
 
-        //this.responseMessage = GlobalConstants.genericError;
+        this.responseMessage = GlobalConstants.genericError;
       }
-      //this.SnackbarService.openSnackBar(this.responseMessage, GlobalConstants.error);
+      this.SnackbarService.openSnackBar(this.responseMessage, GlobalConstants.error);
     })
   }
 }

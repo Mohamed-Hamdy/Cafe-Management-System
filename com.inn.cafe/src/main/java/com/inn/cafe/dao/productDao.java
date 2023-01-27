@@ -3,7 +3,9 @@ package com.inn.cafe.dao;
 import com.inn.cafe.POJO.Product;
 import com.inn.cafe.wrapper.ProductWrapper;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +17,8 @@ public interface productDao extends JpaRepository<Product, Integer> {
 
     ProductWrapper getProductById(@Param("id") Integer id);
 
-    //void updateProductStatus(@Param("isavailable") String isavailable,@Param("id") Integer id);
+    @Modifying
+    @Transactional
+    void updateProductStatus(@Param("status") String status, @Param("id") Integer id);
 
 }

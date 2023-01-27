@@ -7,11 +7,11 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@NamedQuery(name = "Product.getAllProduct", query = "select new com.inn.cafe.wrapper.ProductWrapper(u.id , u.name , u.description , u.price , u.category.id , u.category.name , u.isavailable) from Product u")
+@NamedQuery(name = "Product.getAllProduct", query = "select new com.inn.cafe.wrapper.ProductWrapper(u.id , u.name , u.description , u.price , u.category.id , u.category.name , u.status) from Product u")
 
-//@NamedQuery(name = "Product.updateProductStatus" , query = "update Product u set u.isavailable =:isavailable where u.id =:id")
+@NamedQuery(name = "Product.updateProductStatus" , query = "update Product u set u.status =:status where u.id =:id")
 
-@NamedQuery(name = "Product.getByCategory", query = "select new com.inn.cafe.wrapper.ProductWrapper(u.id , u.name , u.description , u.price , u.category.id , u.category.name , u.isavailable  ) from Product u where u.category.id=:id and u.isavailable='true'")
+@NamedQuery(name = "Product.getByCategory", query = "select new com.inn.cafe.wrapper.ProductWrapper(u.id , u.name , u.description , u.price , u.category.id , u.category.name , u.status  ) from Product u where u.category.id=:id and u.status='true'")
 
 @NamedQuery(name = "Product.getProductById", query = "select new com.inn.cafe.wrapper.ProductWrapper(u.id , u.name , u.description , u.price) from Product u where u.id=:id")
 
@@ -42,8 +42,8 @@ public class Product implements Serializable {
     @Column(name = "price")
     private Integer price;
 
-    @Column(name = "isavailable")
-    private String isavailable;
+    @Column(name = "status")
+    private String status;
 
 
     public Product() {
@@ -90,12 +90,12 @@ public class Product implements Serializable {
     }
 
 
-    public String getIsavailable() {
-        return isavailable;
+    public String getstatus() {
+        return status;
     }
 
-    public void setIsavailable(String isavailable) {
-        this.isavailable = isavailable;
+    public void setstatus(String status) {
+        this.status = status;
     }
 
     @Override
@@ -106,7 +106,7 @@ public class Product implements Serializable {
                 ", category=" + category +
                 ", description='" + description + '\'' +
                 ", price=" + price +
-                ", isavailable='" + isavailable + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

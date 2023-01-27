@@ -14,10 +14,12 @@ import com.inn.cafe.utils.EmailUtil;
 import com.inn.cafe.wrapper.ProductWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -141,14 +143,16 @@ public class productServiceImpl implements productService {
         }
         return new ResponseEntity<>(new ProductWrapper(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    /*
+
+    @Modifying
+    @Transactional
     @Override
     public ResponseEntity<String> updateProductStatus(Map<String, String> requestMap) {
         try {
             if (jwtFilter.isAdmin()) {
                 Optional optional = productDao.findById(Integer.parseInt(requestMap.get("id")));
                 if (!optional.isEmpty()) {
-                    productDao.updateProductStatus(requestMap.get("isavailable"), Integer.parseInt(requestMap.get("id")));
+                    productDao.updateProductStatus(requestMap.get("status"), Integer.parseInt(requestMap.get("id")));
                     return CafeUtils.getResponeEntity("Product status is updated successfully", HttpStatus.OK);
                 }
                 return CafeUtils.getResponeEntity("Product id doesn't exist", HttpStatus.OK);
@@ -158,7 +162,7 @@ public class productServiceImpl implements productService {
         }
         return CafeUtils.getResponeEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    */
+
 
     private boolean validateProductMap(Map<String, String> requestMap, boolean validateId) {
         if (requestMap.containsKey("name")) {
@@ -179,13 +183,13 @@ public class productServiceImpl implements productService {
         if (isAdd) {
             product.setId(Integer.parseInt(requestMap.get("id")));
         } else {
-            product.setIsavailable("true");
+            product.setstatus("true");
         }
         product.setCategory(category);
         product.setName(requestMap.get("name"));
         product.setDescription(requestMap.get("description"));
         product.setPrice(Integer.parseInt(requestMap.get("price")));
-        product.setIsavailable(String.valueOf(isAdd));
+        product.setstatus(String.valueOf(isAdd));
 
         return product;
     }

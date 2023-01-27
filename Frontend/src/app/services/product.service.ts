@@ -27,7 +27,7 @@ export class ProductService {
   }
 
   updateStatus(data:any){
-    return this.httpClient.post(this.url +"/product/updateStatus" , data,{
+    return this.httpClient.post(this.url +"/product/updateProductStatus" , data,{
       headers: new HttpHeaders().set('Content-Type' , "application/json")
     })
   }

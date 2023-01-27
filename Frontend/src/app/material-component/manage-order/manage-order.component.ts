@@ -112,7 +112,7 @@ export class ManageOrderComponent implements OnInit {
 
     //var totalValue = this.manageOrderForm.contols['total'].value;
     var Value = this.manageOrderForm.controls['price'].value;
-    if ( fromData?.product?.total === 0 || fromData?.product?.total === '' || fromData?.product?.quantity <= 0) {
+    if ( Value === null || fromData?.product?.total === 0 || fromData?.product?.total === '' || fromData?.product?.quantity <= 0) {
       return true;
     } else {
       return false;

@@ -30,6 +30,8 @@ public class DashboardServiceImpl implements DashboardService {
 
     @Override
     public ResponseEntity<Map<String, Object>> getCount() {
+        System.out.println("inside getCount");
+
         Map<String , Object> map = new HashMap<>();
         map.put("category" , categoryDao.count());
         map.put("product" , productDao.count());

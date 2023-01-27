@@ -7,8 +7,10 @@ import com.inn.cafe.service.productService;
 import com.inn.cafe.utils.CafeUtils;
 import com.inn.cafe.wrapper.ProductWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -86,7 +88,9 @@ public class productRestImpl implements productRest {
         return new ResponseEntity<>(new ProductWrapper(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    /*
+
+    @Modifying
+    @Transactional
     @Override
     public ResponseEntity<String> updateProductStatus(Map<String, String> requestMap) {
         try {
@@ -97,8 +101,5 @@ public class productRestImpl implements productRest {
         return CafeUtils.getResponeEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-
-
-     */
 
 }
